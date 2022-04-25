@@ -1,0 +1,19 @@
+{
+  "name": "mrp-capacitacion_web",
+  "version": "1.0.0",
+  "description": "}",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EsAlbertoLopez/MRP-Capacitacion_Web.git"
+  },
+  "author": "Guillermo Urbina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EsAlbertoLopez/MRP-Capacitacion_Web/issues"
+  },
+  "homepage": "https://github.com/EsAlbertoLopez/MRP-Capacitacion_Web#readme"
+}
