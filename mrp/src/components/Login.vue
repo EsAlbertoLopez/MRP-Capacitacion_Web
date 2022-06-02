@@ -127,8 +127,9 @@ export default class App extends Vue {
             }
             let response = await this.$store.dispatch('validaUsuario', this.data)
             .then((response) => {
-                console.log(response)
                 if(response.data.replyCode === 200) {
+                    this.$store.commit('setIdUsuario', response.data.data[0])
+                    this.$store.commit('setNombreUsuario', response.data.data[1])
                     this.goToPrincipal()
                 } else {
                     this.mensaje = 'Error al iniciar sesión';

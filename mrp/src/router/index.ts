@@ -1,7 +1,6 @@
 // Importaciones del archivo
 import Vue from 'vue'
 import VueRouter, {RouteConfig} from "vue-router"
-import Principal from '../components/Principal.vue';
 import Examen from '../components/Examen.vue';
 import Inicio from '../components/Inicio.vue';
 import Login from '../components/Login.vue';

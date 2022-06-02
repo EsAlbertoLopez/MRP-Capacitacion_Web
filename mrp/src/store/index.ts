@@ -14,17 +14,31 @@ export default new Vuex.Store({
   
     ],
     state: {
-        materias: ''
+        materias: '',
+        idUsuario: '',
+        nombreUsuario: ''
     },
     getters: {
         getMaterias: (state) => {
             return state.materias
-          }    
+        },
+        getIdUsuario: (state) => {
+            return state.idUsuario
+        },
+        getNombreUsuario: (state) => {
+            return state.nombreUsuario
+        }
     },
     mutations: {
-        setMaterias(state, materias){
-            state.materias = materias;
-        }    
+        setMaterias(state, materias) {
+            state.materias = materias
+        },    
+        setIdUsuario(state, idUsuario) {
+            state.idUsuario = idUsuario
+        },
+        setNombreUsuario(state, nombreUsuario) {
+            state.nombreUsuario = nombreUsuario
+        }
     },
     actions: {
         getMaterias({commit, state}, data){

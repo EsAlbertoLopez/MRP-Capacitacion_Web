@@ -1,5 +1,5 @@
-//http://mrpserver.ddns.net
-///mrp
+// http://mrpserver.ddns.net
+// /mrp
 
 module.exports = {
   productionSourceMap: false,

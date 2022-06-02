@@ -38,6 +38,12 @@
                 hide-details="auto"
                 style="width: 70%; margin-left: auto; margin-right: auto"
             ></v-text-field>
+            <v-text-field
+                v-model="descripcion"
+                label="Descripción"
+                hide-details="auto"
+                style="width: 70%; margin-left: auto; margin-right: auto; margin-top: 4%"
+            ></v-text-field>
             <v-select
                 label="Dificultad"
                 outlined
@@ -45,14 +51,13 @@
                 v-model = "dificultadSelected"
                 style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 7%"
             >
-
             </v-select>  
             <v-select
                 label="Materia"
                 outlined
                 :items = materias
                 v-model = "materiaSelected"
-                style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 7%"
+                style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 3%"
             ></v-select>
             <v-file-input
                 v-model="formato"
@@ -60,6 +65,10 @@
                 label="Excel"
                 style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 2%"
             ></v-file-input>
+            <v-checkbox
+                v-model="cobro"
+                label="Premium"
+            ></v-checkbox>
             <v-card-actions>
                 <v-btn
                     style="background-color: #4F95C6; margin-left: auto; margin-right: auto; margin-bottom: 1%"
@@ -83,11 +92,13 @@ import { Component, Vue, Watch } from "vue-property-decorator";
         private dificultadSelected: any = ''
         private formato: any = ''
         private nombreExamen: any = ''
+        private descripcion: any = ''
         private profe: any = ''
         private dificultad: any = ''
-        private cuerpo: any = {}
+        private cobro: any = 0
         private instFormData = new FormData();
         private alerta = false
+        private mensajeCheck = 'Gratis'
         private dificultades: any = [
             { id: 1, text: 'Fácil' },
             { id: 2, text: 'Medio' },
@@ -107,18 +118,26 @@ import { Component, Vue, Watch } from "vue-property-decorator";
         /* Métodos */
         async cargaExamen() {
             let instFormData = new FormData();
+            this.cobro = this.cobro === false ? 0 : 1
             instFormData.append('nombreExamen', this.nombreExamen)
-            instFormData.append('profe', '10000001')
-            instFormData.append('idMateria', this.materiaSelected)
+            instFormData.append('descripcion', this.descripcion)
             instFormData.append('dificultad', this.dificultadSelected)
+            instFormData.append('idMateria', this.materias[this.materiaSelected].value)
+            instFormData.append('materia', this.materias[this.materiaSelected].text)
+            instFormData.append('idProfe', this.$store.getters.getIdUsuario)
+            instFormData.append('profe', this.$store.getters.getNombreUsuario)
+            instFormData.append('cobro', this.cobro)
             instFormData.append('formatoExamen', this.formato, this.formato.name)
 
             let resultado = await this.$store.dispatch('cargaExamen', instFormData)
             if(resultado.replyCode === 200) {
+                console.log(resultado)
                 this.nombreExamen = ''
                 this.materiaSelected = ''
+                this.descripcion = ''
                 this.dificultadSelected = ''
                 this.formato = ''
+                this.cobro = 0
             } else {
                 this.alerta = true
             }
