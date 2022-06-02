@@ -2,7 +2,6 @@
     <v-app>
         <v-alert
             v-show="alerta === true"
-            v-model="alerta"
             dismissible 
             color="#4F95C6"
             border="left"
@@ -11,13 +10,42 @@
             icon="mdi-twitter"
             style="width: 30%; margin-left: auto; margin-right: auto"
         >
-            El correo registrado ya está en uso o no tiene el formato correcto.
+            {{this.mensaje}}
         </v-alert>
         <v-card
+            v-show="tokenValidacion === true"
+            style="width: 20%; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: auto"
+        >
+            <v-card-title
+                style="margin-left: 35%"
+            >
+                Token de acceso
+            </v-card-title>
+            <v-card-text>
+                <v-text-field
+                    v-model="token"
+                    label="Token"
+                    hide-details="auto"
+                    style="width: 50%; margin-left: auto; margin-right: auto"
+                    prepend-inner-icon="mdi-account" 
+                >
+                </v-text-field>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                    style="margin-left: 42%; margin-top: 1%; margin-bottom: 2%; background-color: #4F95C6"
+                    @click="validaToken"
+                >
+                    Acceder
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+        <v-card
             style="width: 50%; margin-top: 1%; margin-left: auto; margin-right: auto; margin-bottom: 5%; height: 70%"
+            v-show="tokenValidacion === false"
         >
             <v-card-title>
-                Formulario de registro
+                {{nombreExamen}}
             </v-card-title>
             <v-card-text>
                 <p>
@@ -45,6 +73,7 @@
             <v-text-field
                 v-model="password"
                 label="Contraseña"
+                type="password"
                 hide-details="auto"
                 style="width: 70%; margin-left: auto; margin-right: auto; margin-top: 5%"
             ></v-text-field>
@@ -72,6 +101,10 @@ export default class App extends Vue {
     private usuario: any = ''
     private password: any = ''
     private alerta: any = false
+    private tokenValidacion: any = false
+    private noProfesor: any = ''
+    private token: any = 0
+    private mensaje: any = ''
 
     // Métodos
     
@@ -92,11 +125,53 @@ export default class App extends Vue {
         .then((response) => {
             console.log(response)
             if(response.replyCode === 200) {
-                this.data = []
+                this.noProfesor = response.data[0]
+                console.log(this.noProfesor)
+                this.tokenValidacion = true
+                this.generaToken()
+            } else {
+                this.mensaje = 'Este correo ya está registrado'
+                this.alerta = true
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    private async generaToken() {
+        this.data = {
+            noProfesor: this.noProfesor,
+            correo: this.correo
+        }
+        let response = await this.$store.dispatch('generaToken', this.data)
+        .then((response) => {
+            console.log(response)
+            if(response.data.replyCode === 200) {
+                this.tokenValidacion = true
+            } else {
+                this.mensaje = 'El token no se ha podido generar, vuelva a intentarlo'
+                this.alerta = true
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    private async validaToken() {
+        this.data = {
+            noProfesor: this.noProfesor,
+            token: this.token
+        }
+        let response = await this.$store.dispatch('validaToken', this.data)
+        .then((response) => {
+            console.log(response)
+            if(response.data.replyCode === 200) {
                 this.goToPrincipal()
             } else {
+                this.mensaje = 'Token no valido'
                 this.alerta = true
-                this.data = []
             }
         })
         .catch((err) => {

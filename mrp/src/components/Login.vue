@@ -1,5 +1,22 @@
 <template>
-    <v-app>
+        <v-app>
+            <v-app-bar
+            app
+            id="headerWeb"
+            dark
+            shrink-on-scroll
+            src="../assets/FONDO.jpg"
+
+        >
+          <template v-slot:img="{ props }">
+              <v-img
+                  v-bind="props"
+                  gradient="to top right, rgba(79,149,198,.7), rgba(25,32,72,.7)"
+              ></v-img>
+          </template>
+
+          <v-app-bar-title>MRP CAPACITACIÓN Y CERTIFICACIÓN</v-app-bar-title>
+        </v-app-bar>
         <v-alert
             v-show="alerta === true"
             v-model="alerta"
@@ -33,8 +50,9 @@
                 </v-text-field>
                 <v-text-field
                     v-model="pass"
+                    hide
                     label="Contraseña"
-                    hide-details="auto"
+                    type="password"
                     style="width: 50%; margin-left: auto; margin-right: auto; margin-top: 5%"
                     prepend-inner-icon="mdi-key" 
                 >
@@ -89,11 +107,9 @@ export default class App extends Vue {
         .then((response) => {
             console.log(response)
             if(response.data.replyCode === 200) {
-                this.data = []
                 this.goToPrincipal()
             } else {
                 this.alerta = true
-                this.data = []
             }
         })
         .catch((err) => {

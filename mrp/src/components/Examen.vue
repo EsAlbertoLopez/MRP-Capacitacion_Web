@@ -16,8 +16,8 @@
             <v-card-actions>
                 <!-- <v-btn -->
                     <!-- style="background-color: #4F95C6; margin-left: auto; margin-right: auto" -->
-                <!-- > -->
-                    <a download href='http://localhost:3000/mrp/Formato.xlsx'>Descargar formato</a>
+                <!-- > --> 
+                    <a href="http://localhost:8080/mrp/src/assets/Formato.xlsx" download="Formato.xlsx">Descargar Formato</a>
                 <!-- </v-btn> -->
             </v-card-actions>
         </v-card>
@@ -33,6 +33,7 @@
                 </p>
             </v-card-text>
             <v-text-field
+                v-model="nombreExamen"
                 label="Nombre examen"
                 hide-details="auto"
                 style="width: 70%; margin-left: auto; margin-right: auto"
@@ -54,6 +55,7 @@
                 style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 7%"
             ></v-select>
             <v-file-input
+                v-model="formato"
                 show-size
                 label="Excel"
                 style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 2%"
@@ -61,6 +63,7 @@
             <v-card-actions>
                 <v-btn
                     style="background-color: #4F95C6; margin-left: auto; margin-right: auto; margin-bottom: 1%"
+                    @click="cargaExamen"
                 >
                     Subir examen
                 </v-btn>
@@ -79,6 +82,12 @@ import { Component, Vue, Watch } from "vue-property-decorator";
         private materiaSelected: any = ''
         private dificultadSelected: any = ''
         private formato: any = ''
+        private nombreExamen: any = ''
+        private profe: any = ''
+        private dificultad: any = ''
+        private cuerpo: any = {}
+        private instFormData = new FormData();
+        private alerta = false
         private dificultades: any = [
             { id: 1, text: 'Fácil' },
             { id: 2, text: 'Medio' },
@@ -93,6 +102,26 @@ import { Component, Vue, Watch } from "vue-property-decorator";
                 text: materia.NOMBRE_MATERIA,
                 value: materia.ID_MATERIA
             }))
+        }
+
+        /* Métodos */
+        async cargaExamen() {
+            let instFormData = new FormData();
+            instFormData.append('nombreExamen', this.nombreExamen)
+            instFormData.append('profe', '10000001')
+            instFormData.append('idMateria', this.materiaSelected)
+            instFormData.append('dificultad', this.dificultadSelected)
+            instFormData.append('formatoExamen', this.formato, this.formato.name)
+
+            let resultado = await this.$store.dispatch('cargaExamen', instFormData)
+            if(resultado.replyCode === 200) {
+                this.nombreExamen = ''
+                this.materiaSelected = ''
+                this.dificultadSelected = ''
+                this.formato = ''
+            } else {
+                this.alerta = true
+            }
         }
     }
 </script>
