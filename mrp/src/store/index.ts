@@ -45,7 +45,7 @@ export default new Vuex.Store({
 
         validaUsuario({commit, state}, data){
             return new Promise((resolve, reject) => {
-                axios.post('http://34.136.247.22:3000/mrp/validaUsuario', data, {
+                axios.post('http://34.136.247.22:3000/mrp/validaUsuarioProfesor', data, {
                     headers: {
             
                     }
@@ -58,22 +58,6 @@ export default new Vuex.Store({
                 });
             })
         },        
-
-        registraAlumno({commit, state}, data){
-            return new Promise((resolve, reject) => {
-                axios.get('http://34.136.247.22:3000/mrp/',{
-                    headers: {
-            
-                    }
-                })
-                .then((response: any) => {
-                    resolve(response.data);
-                })
-                .catch((error: any) => {
-                    resolve({replyCode: 400, replyText: error.message, data: []});
-                });
-            })
-        },
 
         registraProfesor({commit, state}, data){
             return new Promise((resolve, reject) => {

@@ -39,7 +39,7 @@ const routes: Array<RouteConfig> =
 
 const router = new VueRouter({
     mode: 'history',
-    base: "/mrp",
+    base: "/",
     routes
   })
 

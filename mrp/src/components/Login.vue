@@ -6,72 +6,82 @@
             dark
             shrink-on-scroll
             src="../assets/FONDO.jpg"
+            >
+            <template v-slot:img="{ props }">
+                <v-img
+                    v-bind="props"
+                    gradient="to top right, rgba(79,149,198,.7), rgba(25,32,72,.7)"
+                ></v-img>
+            </template>
 
-        >
-          <template v-slot:img="{ props }">
-              <v-img
-                  v-bind="props"
-                  gradient="to top right, rgba(79,149,198,.7), rgba(25,32,72,.7)"
-              ></v-img>
-          </template>
-
-          <v-app-bar-title>MRP CAPACITACIÓN Y CERTIFICACIÓN</v-app-bar-title>
-        </v-app-bar>
-        <v-alert
-            v-show="alerta === true"
-            v-model="alerta"
-            dismissible 
-            color="#4F95C6"
-            border="left"
-            elevation="2"
-            colored-border
-            icon="mdi-twitter"
-            style="width: 30%; margin-left: auto; margin-right: auto"
-        >
-            Usuario incorrecto por favor intente otra vez con los datos correctos.
-        </v-alert>
-        <v-card
-            style="width: 30%; height: 50%; margin-left: auto; margin-right: auto"
-        >
-            <v-card-title>
-                Inicio de sesión
-            </v-card-title>
-            <v-card-subtitle>
-                Introduce los datos para iniciar sesión, en caso de no tener usuario registrado selecciona el botón de registrar.
-            </v-card-subtitle>
-            <v-card-text>
-                <v-text-field
-                    v-model="user"
-                    label="Nombre usuario"
-                    hide-details="auto"
-                    style="width: 50%; margin-left: auto; margin-right: auto"
-                    prepend-inner-icon="mdi-account" 
+            <v-app-bar-title>MRP CAPACITACIÓN Y CERTIFICACIÓN</v-app-bar-title>
+            </v-app-bar>
+            <v-dialog 
+                transition="dialog-top-transition"  
+                v-show="alerta === true"
+                v-model="alerta" 
+                width="30%"
+                style="margin-left: auto; margin-right: auto"
+            >
+                <v-toolbar 
+                dark 
+                color="primary"
+                style="margin-left: auto; margin-right: auto"
                 >
-                </v-text-field>
-                <v-text-field
-                    v-model="pass"
-                    hide
-                    label="Contraseña"
-                    type="password"
-                    style="width: 50%; margin-left: auto; margin-right: auto; margin-top: 5%"
-                    prepend-inner-icon="mdi-key" 
+                    <v-toolbar-title>{{mensaje}}</v-toolbar-title>
+                    <v-btn color="red" rounded @click="alerta=false" max-width="40px" style="margin-left: auto">
+                        <v-icon> mdi-window-close </v-icon>
+                    </v-btn>
+                </v-toolbar>
+            </v-dialog>
+                <v-card
+                style="width: 30%; height: 50%; margin-left: auto; margin-right: auto; margin-top: -7%"
                 >
-                </v-text-field>
-                <v-btn
-                    @click="goToRegistro"
-                    style="margin-left: 20%; margin-top: 10%; background-color: #4F95C6"
-                >
-                    Registrarse
-                </v-btn>
-                <v-btn
-                    @click="validaUsuario"
-                    style="margin-left: 15%; margin-top: 10%; background-color: #4F95C6"
-                >
-                    Iniciar sesión
-                </v-btn>
-            </v-card-text>
-        </v-card>
-    </v-app>
+                <v-card-title>
+                    <p style="margin-left: auto; margin-right: auto">Inicio de sesión</p>
+                </v-card-title>
+                <v-card-subtitle>
+                    <p style="text-align: center">Introduce los datos para iniciar sesión, en caso de no tener usuario registrado selecciona el botón de registrar.</p>
+                </v-card-subtitle>
+                <v-card-text>
+                    <v-text-field
+                        required
+                        :rules="[rules.required]"
+                        v-model="mail"
+                        label="Correo del usuario"
+                        hide-details="auto"
+                        style="width: 50%; margin-left: auto; margin-right: auto"
+                        prepend-inner-icon="mdi-account" 
+                    >
+                    </v-text-field>
+                    <v-text-field
+                        required
+                        :rules="[rules.required]"
+                        v-model="pass"
+                        hide
+                        label="Contraseña"
+                        type="password"
+                        style="width: 50%; margin-left: auto; margin-right: auto; margin-top: 5%"
+                        prepend-inner-icon="mdi-key" 
+                    >
+                    </v-text-field>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn
+                        @click="goToRegistro"
+                        style="margin-left: 19%; background-color: #4F95C6; width: 30%; font-size: 0.8vw"
+                    >
+                        Registrarse
+                    </v-btn>
+                    <v-btn
+                        @click="validaUsuario"
+                        style="margin-left: 8%; background-color: #4F95C6; width: 30%; font-size: 0.8vw"
+                    >
+                        Iniciar sesión
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-app>
 </template>
 
 <script lang="ts">
@@ -79,10 +89,18 @@ import { Component, Vue, Watch} from 'vue-property-decorator';
 @Component({
 })
 export default class App extends Vue {
+    //Variables
     private pass = ''
-    private user = ''
+    private mail = ''
     private alerta = false
     private data: any = {}
+    private validForm = false
+    private mensaje = ""
+
+    //Reglas de validación
+    private rules: object = {
+      required: (v: string) => !!v || 'Este campo es requerido',
+    };
 
     //Metodos de rutas
     private goToPrincipal() {
@@ -99,22 +117,28 @@ export default class App extends Vue {
 
     //Metodos 
     private async validaUsuario() {
-        this.data = {
-            USUARIO: this.user,
-            PASSWORD: this.pass
-        }
-        let response = await this.$store.dispatch('validaUsuario', this.data)
-        .then((response) => {
-            console.log(response)
-            if(response.data.replyCode === 200) {
-                this.goToPrincipal()
-            } else {
-                this.alerta = true
+        if(this.mail === "" || this.pass === "") {
+            this.alerta = true;
+            this.mensaje = 'Completa los datos obligatorios';
+        } else {
+            this.data = {
+                correo: this.mail,
+                password: this.pass
             }
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            let response = await this.$store.dispatch('validaUsuario', this.data)
+            .then((response) => {
+                console.log(response)
+                if(response.data.replyCode === 200) {
+                    this.goToPrincipal()
+                } else {
+                    this.mensaje = 'Error al iniciar sesión';
+                    this.alerta = true
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
     }
 };
 </script>

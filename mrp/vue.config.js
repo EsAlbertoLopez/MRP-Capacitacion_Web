@@ -1,7 +1,10 @@
+//http://mrpserver.ddns.net
+///mrp
+
 module.exports = {
   productionSourceMap: false,
-  publicPath: '/mrp',
-  outputDir: '/mrp',
+  publicPath: 'http://mrpserver.ddns.net',
+  outputDir: 'mrp',
   transpileDependencies: [
     'vuetify'
   ],
