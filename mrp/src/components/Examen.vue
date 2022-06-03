@@ -4,7 +4,7 @@
             style="width: 50%; margin-top: 1%; margin-left: auto; margin-right: auto"
         >
             <v-card-title>
-                Formato del examen
+                <p style="margin-left: auto; margin-right: auto">Formato del examen</p>
             </v-card-title>
             <v-card-text>
                 <p>
@@ -14,23 +14,17 @@
                 </p>
             </v-card-text>
             <v-card-actions>
-                <!-- <v-btn -->
-                    <!-- style="background-color: #4F95C6; margin-left: auto; margin-right: auto" -->
-                <!-- > --> 
-                    <a href="http://localhost:8080/mrp/src/assets/Formato.xlsx" download="Formato.xlsx">Descargar Formato</a>
-                <!-- </v-btn> -->
+                <a style="margin-left: auto; margin-right: auto" href="http://localhost:8080/mrp/src/assets/Formato.xlsx" download="Formato.xlsx">Descargar Formato</a>
             </v-card-actions>
         </v-card>
         <v-card
             style="width: 50%; margin-top: 1%; margin-left: auto; margin-right: auto; margin-bottom: 5%; margin-top: 3%"
         >
             <v-card-title>
-                Formulario
+                <p style="margin-left: auto; margin-right: auto">Formulario</p>
             </v-card-title>
             <v-card-text>
-                <p>
-                    Llena los datos y carga el archivo completo.
-                </p>
+                <p style="text-align: center">Llena los datos y carga el archivo completo.</p>
             </v-card-text>
             <v-text-field
                 v-model="nombreExamen"
@@ -49,7 +43,7 @@
                 outlined
                 :items = dificultades
                 v-model = "dificultadSelected"
-                style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 7%"
+                style="width: 70%; margin-left: auto; margin-right: auto; margin-top: 7%"
             >
             </v-select>  
             <v-select
@@ -57,17 +51,18 @@
                 outlined
                 :items = materias
                 v-model = "materiaSelected"
-                style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 3%"
+                style="width: 70%; margin-left: auto; margin-right: auto; margin-top: 3%"
             ></v-select>
             <v-file-input
                 v-model="formato"
                 show-size
                 label="Excel"
-                style="width: 70%; ; margin-left: auto; margin-right: auto; margin-top: 2%"
+                style="width: 70%; margin-left: auto; margin-right: auto; margin-top: 2%"
             ></v-file-input>
             <v-checkbox
                 v-model="cobro"
                 label="Premium"
+                style="margin-left: 15%; margin-right: auto"
             ></v-checkbox>
             <v-card-actions>
                 <v-btn

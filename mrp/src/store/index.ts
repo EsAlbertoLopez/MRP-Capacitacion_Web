@@ -73,6 +73,54 @@ export default new Vuex.Store({
             })
         },        
 
+        recuperaExamenProfe({commit, state}, data){
+            return new Promise((resolve, reject) => {
+                axios.get(`http://34.136.247.22:3000/mrp/regresaExamenMaestro/${data.toString()}`, {
+                    headers: {
+
+                    }
+                })
+                .then((response: any) => {
+                    resolve(response);
+                })
+                .catch((error: any) => {
+                    resolve({replyCode: 400, replyText: error.message, data: []});
+                });
+            })
+        },
+
+        recuperaExamenId({commit, state}, data){
+            return new Promise((resolve, reject) => {
+                axios.get(`http://34.136.247.22:3000/mrp/regresaExamen/${data.toString()}`, {
+                    headers: {
+
+                    }
+                })
+                .then((response: any) => {
+                    resolve(response);
+                })
+                .catch((error: any) => {
+                    resolve({replyCode: 400, replyText: error.message, data: []});
+                });
+            })
+        },
+
+        eliminaExamenId({commit, state}, data){
+            return new Promise((resolve, reject) => {
+                axios.post('http://34.136.247.22:3000/mrp/borraExamen', data, {
+                    headers: {
+            
+                    }
+                })
+                .then((response: any) => {
+                    resolve(response.data);
+                })
+                .catch((error: any) => {
+                    resolve({replyCode: 400, replyText: error.message, data: []});
+                });
+            })
+        },
+
         registraProfesor({commit, state}, data){
             return new Promise((resolve, reject) => {
                 axios.post('http://34.136.247.22:3000/mrp/creaProfesor', data, {

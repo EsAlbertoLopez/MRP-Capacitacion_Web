@@ -6,8 +6,7 @@
         id="headerWeb"
         dark
         shrink-on-scroll
-        src="./assets/FONDO.jpg"
-        
+        src="./assets/FONDO.jpg"   
     >
       <template v-slot:img="{ props }">
           <v-img
@@ -20,7 +19,7 @@
 
       <template v-slot:extension>
           <v-tabs align-with-title>
-              <v-tab @click="goToPrincipal">Inicio</v-tab>
+              <v-tab @click="goToPrincipal">Exámenes</v-tab>
               <v-tab @click="goToExamen">Cargar Examen</v-tab>
           </v-tabs>
       </template>

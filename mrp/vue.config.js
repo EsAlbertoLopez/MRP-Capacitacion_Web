@@ -3,7 +3,7 @@
 
 module.exports = {
   productionSourceMap: false,
-  publicPath: 'http://mrpserver.ddns.net',
+  publicPath: '/mrp',
   outputDir: 'mrp',
   transpileDependencies: [
     'vuetify'
