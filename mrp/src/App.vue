@@ -22,6 +22,12 @@
               <v-tab @click="goToPrincipal">Exámenes</v-tab>
               <v-tab @click="goToExamen">Cargar Examen</v-tab>
           </v-tabs>
+          <v-btn
+            @click="goToSalida"
+            style="margin-left: 19%; background-color: #4F95C6; width: 5%; font-size: 0.8vw"
+          >
+            Salir
+          </v-btn>
       </template>
     </v-app-bar>
     <v-main style="height: auto">
@@ -48,6 +54,14 @@ export default class App extends Vue {
     private goToExamen() {
       if (this.$route.name !== '/examen') {
         this.$router.push('/examen');
+      }
+    }
+
+    private goToSalida(){
+      if (this.$route.name !== '/') {
+        this.$store.commit('setIdUsuario', "")
+        this.$store.commit('setNombreUsuario', "")
+        this.$router.push('/');
       }
     }
 };

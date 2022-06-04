@@ -11,7 +11,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     plugins: [
-  
+        createPersistedState({
+            key: 'Windows',
+            storage: window.sessionStorage,
+        })
+      
     ],
     state: {
         materias: '',

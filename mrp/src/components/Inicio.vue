@@ -32,6 +32,7 @@
                 <p style="text-align: center">Hola {{this.nombreProfeCard}}, aquí puedes ver el detalle de tu examen {{this.nombreExamenCard}}, donde podrás eliminar el examen o actualizar algunos datos.</p>
             </v-card-subtitle>
             <v-card-text>
+                <p>Descripción: {{this.descripcionCard}}</p>
                 <p>Materia: {{this.materiaCard}}</p>
                 <p>Dificultad: {{this.dificultadCard}}</p>
                 <p>Número de preguntas: {{this.noPreguntasCard}}</p>
@@ -110,6 +111,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
         private mensaje: any = ""
         private alerta: any = false
         private examenIdCard: any = ""
+        private descripcionCard: any = ""
 
         /* Cargas iniciales*/
         async mounted() {
@@ -138,6 +140,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
             this.examenIdCard = resultadoExamen.data.data[0].examen.id
             this.nombreExamenCard = resultadoExamen.data.data[0].examen.nombreExamen
             this.materiaCard = resultadoExamen.data.data[0].examen.materia
+            this.descripcionCard = resultadoExamen.data.data[0].examen.description
             this.dificultadCard = resultadoExamen.data.data[0].examen.dificultad
             this.noPreguntasCard = resultadoExamen.data.data[0].examen.noPreguntas
             this.PreguntasCard = resultadoExamen.data.data[0].examen.preguntas

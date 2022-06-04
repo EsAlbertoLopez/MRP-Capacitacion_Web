@@ -1,5 +1,23 @@
 <template>
     <v-app>
+        <v-dialog 
+                transition="dialog-top-transition"  
+                v-show="alerta === true"
+                v-model="alerta" 
+                width="30%"
+                style="margin-left: auto; margin-right: auto"
+            >
+                <v-toolbar 
+                dark 
+                color="primary"
+                style="margin-left: auto; margin-right: auto"
+                >
+                    <v-toolbar-title>{{this.mensajeAlerta}}</v-toolbar-title>
+                    <v-btn color="red" rounded @click="alerta=false" max-width="40px" style="margin-left: auto">
+                        <v-icon> mdi-window-close </v-icon>
+                    </v-btn>
+                </v-toolbar>
+        </v-dialog>
         <v-card
             style="width: 50%; margin-top: 1%; margin-left: auto; margin-right: auto"
         >
@@ -14,7 +32,7 @@
                 </p>
             </v-card-text>
             <v-card-actions>
-                <a style="margin-left: auto; margin-right: auto" href="http://localhost:8080/mrp/src/assets/Formato.xlsx" download="Formato.xlsx">Descargar Formato</a>
+                <a style="margin-left: auto; margin-right: auto" href="C:/Users/guill/Desktop/Formato.xlsxs" download="Formato">Descargar Formato</a>
             </v-card-actions>
         </v-card>
         <v-card
@@ -94,6 +112,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
         private instFormData = new FormData();
         private alerta = false
         private mensajeCheck = 'Gratis'
+        private mensajeAlerta: any = ""
         private dificultades: any = [
             { id: 1, text: 'Fácil' },
             { id: 2, text: 'Medio' },
@@ -133,7 +152,10 @@ import { Component, Vue, Watch } from "vue-property-decorator";
                 this.dificultadSelected = ''
                 this.formato = ''
                 this.cobro = 0
+                this.mensajeAlerta = "Examen cargado con exito"
+                this.alerta = true
             } else {
+                this.mensajeAlerta = "Error al cargar el examen"
                 this.alerta = true
             }
         }
