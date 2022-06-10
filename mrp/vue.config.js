@@ -1,10 +1,10 @@
-// 
-// /keyence
+// http://mrpserver.ddns.net
+// /mrp
 
 module.exports = {
   productionSourceMap: false,
-  publicPath: '/keyence',
-  outputDir: 'keyence',
+  publicPath: 'http://mrpserver.ddns.net',
+  outputDir: 'mrp',
   transpileDependencies: [
     'vuetify'
   ],
