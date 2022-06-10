@@ -43,7 +43,7 @@
                 </v-data-table> 
             </v-card-text>
             <v-card-actions>
-                <v-btn color="red" rounded @click="eliminarArchivo" max-width="100px" style="margin-top: 3%; margin-left: auto; margin-right: auto; width: 30%; margin-bottom: 3%">
+                <v-btn color="red" rounded @click="eliminarArchivo" style="margin-top: 3%; margin-left: auto; margin-right: auto; width: 30%; margin-bottom: 3%">
                     Eliminar Archivo
                 </v-btn>
             </v-card-actions>
